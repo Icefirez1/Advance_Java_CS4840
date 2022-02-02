@@ -4,9 +4,12 @@
  */
 import java.util.List;
 import java.util.ArrayList;
+import java.lang.reflect.Array;
 import java.util.*;
-
-public class BinarySearch<T extends Comparable>
+import java.util.Comparator;
+import java.lang.Comparable;
+import java.util.Collections;
+public class BinarySearch<T extends Comparable<T>> 
 {
     private List<T> items;
     /**
@@ -19,6 +22,11 @@ public class BinarySearch<T extends Comparable>
         //throw an IllegalArgumentException if 
         //the list is out of order.
         this.items = items;
+        System.out.println(isInOrder(items));
+        if (!isInOrder(items))
+        {
+            throw new IllegalArgumentException("Doesnt work");
+        }
     }
     /**
     *  This searches our list and returns the index containing
@@ -27,6 +35,18 @@ public class BinarySearch<T extends Comparable>
     *  @return the index of the first instance of <code>quarry</code>, 
     *  or -1 if <code>quarry</code> is not found.
     */
+    public static <T extends Comparable<T>> boolean isInOrder(List<T> list)
+    {
+        System.out.println("checked");
+        for (int i = 0; i < list.size() -1; i ++)
+        {
+            if(list.get(i).compareTo(list.get(i+1)) > 0)
+            {
+                return false; 
+            }
+        }
+        return true;
+    }
     public int indexOf(T quarry)
     {
         //use bianry search to locate quarry by index
@@ -62,15 +82,15 @@ public class BinarySearch<T extends Comparable>
         list.add(5);
         list.add(6);
         System.out.println(list.toString());
-        System.out.println(list.toString());
-        List tmp = new ArrayList(list);
+        BinarySearch<Integer> bs = new BinarySearch<>(list);
+        /*List<Integer> tmp = new ArrayList<>(list);
         Collections.sort(tmp);
         boolean sorted = tmp.equals(list);
         if (sorted == false)
         {
             throw new IllegalArgumentException("dumb");
-        }
-        System.out.println(list.indexOf(5));
+        }*/
+        System.out.println(bs.indexOf(5));
 
         
 
