@@ -22,12 +22,18 @@ def bubble(x):
         pointer -= 1
 
 def trickle(x):
-    print("urmom")
+    pointer = 1 
+    while pointer < len(x): 
+        for i in range(pointer, 0 ,-1):
+            if x[i] < x[i -1]:
+                swap(x,i,i-1)
+        pointer += 1
+
 
 if __name__ == "__main__":
     x = list(range(100))
     shuffle(x)
     print(x)
-    bubble(x)
+    trickle(x)
     print(x)
     
