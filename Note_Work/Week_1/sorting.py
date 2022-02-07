@@ -23,11 +23,11 @@ def bubble(x):
 
 def trickle(x):
     pointer = 1 
-    while pointer < len(x): 
-        for i in range(pointer, 0 ,-1):
+    for j in range(len(x)): 
+        for i in range(j, 0 ,-1):
             if x[i] < x[i -1]:
                 swap(x,i,i-1)
-        pointer += 1
+
 
 
 if __name__ == "__main__":
