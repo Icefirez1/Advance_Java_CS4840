@@ -16,8 +16,6 @@ def is_prime_better(n):
         count += 2
     return True 
 
-def main():
+if __name__ == "__main__":
     print(is_prime_better(997))
     print(is_prime_better(997))
-
-main()

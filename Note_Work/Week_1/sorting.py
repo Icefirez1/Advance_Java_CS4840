@@ -29,11 +29,10 @@ def trickle(x):
                 swap(x,i,i-1)
 
 
-
 if __name__ == "__main__":
     x = list(range(100))
     shuffle(x)
     print(x)
     trickle(x)
-    print(x)
+    print(x) 
     
