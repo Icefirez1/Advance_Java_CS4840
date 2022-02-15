@@ -22,10 +22,10 @@ public class BinarySearch<T extends Comparable<T>>
         //throw an IllegalArgumentException if 
         //the list is out of order.
         this.items = items;
-        System.out.println(isInOrder(items));
+        //System.out.println(isInOrder(items));
         if (!isInOrder(items))
         {
-            throw new IllegalArgumentException("Doesnt work");
+            throw new IllegalArgumentException("List Out of order");
         }
     }
     /**
@@ -37,7 +37,7 @@ public class BinarySearch<T extends Comparable<T>>
     */
     public static <T extends Comparable<T>> boolean isInOrder(List<T> list)
     {
-        System.out.println("checked");
+        //System.out.println("checked");
         for (int i = 0; i < list.size() -1; i ++)
         {
             if(list.get(i).compareTo(list.get(i+1)) > 0)
@@ -72,16 +72,16 @@ public class BinarySearch<T extends Comparable<T>>
     public static void main(String[] args)
     {
         //TEST YOUR CODE!!
-        System.out.println("yuh");
+        //System.out.println("yuh");
         List<Integer> list = new ArrayList<Integer>();
         list.add(1);
         list.add(2);
         list.add(3);
-        list.add(2);
-        list.add(123);
+        //list.add(2);
+        //list.add(123);
         list.add(5);
         list.add(6);
-        System.out.println(list.toString());
+        //System.out.println(list.toString());
         BinarySearch<Integer> bs = new BinarySearch<>(list);
         /*List<Integer> tmp = new ArrayList<>(list);
         Collections.sort(tmp);
@@ -90,7 +90,7 @@ public class BinarySearch<T extends Comparable<T>>
         {
             throw new IllegalArgumentException("dumb");
         }*/
-        System.out.println(bs.indexOf(5));
+        System.out.println(list.indexOf(5));
 
         
 
