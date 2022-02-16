@@ -63,8 +63,8 @@ public class Sordid
         int n = Integer.parseInt(args[0]);
         for (int i = 0; i < n; i++)
         {
-            al .add(" " + i);
-            al2.add(" " +i);
+            al .add("" + i);
+            al2.add("" +i);
         }
         Collections.shuffle(al);
         trickle(al);
