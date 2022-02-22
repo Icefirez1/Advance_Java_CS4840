@@ -50,7 +50,7 @@ public class Sorts
         }
         out.addAll(list.subList(px, list.size()));
         out.addAll(list2.subList(py, list2.size()));
-        return out; 
+        return out;     
     }
     
     public static <T extends Comparable> List<T> merge(List<T> x)

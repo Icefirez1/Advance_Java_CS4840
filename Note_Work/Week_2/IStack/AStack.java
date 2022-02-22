@@ -14,7 +14,7 @@ public class AStack<T> implements IStack<T>, Iterable<T>
         this.capacity = capacity;
         items = new Object[capacity];
         size = 0;
-    }
+    } 
     public AStack()
     {
         this(10);

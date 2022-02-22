@@ -1,19 +1,53 @@
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 public class AList<T> implements IList<T>, Iterable<T>
 {
     private Object[] entries;
-    public AList()
+    private int size; 
+    private int capacity_list;
+    // I guess when you initialize a list itll make one thats 10 objects big
+    
+    public AList() //Tested and done
     {
-        entries = new Object[10];
+        entries = new Object[10]; 
+        size = 0;
+        capacity_list = 10; 
+    }
+    public AList(int capacity)
+    {
+        entries = new Object[capacity]; 
+        size = 0;
+        capacity_list = capacity;
     }
     /**
     *  appends <code>item</code> to this list
     *  @param item object to be added to this list
     *  @return true if <code>item</code> is added to this list
     */
-    public boolean add(T item)
+    public boolean add(T item) // Done and tested
     {
-        return false;
+        for (int i = 0; i < capacity_list; i++)
+        {
+            if(entries[i] == null)
+            {
+                entries[i] = item;
+                size ++; 
+                return true;
+            }
+        }
+
+        return false; 
+    }
+    private static int newLength(int n)
+    {
+        return n < 1000? 2*n : 3*n/2;
+    }
+    public void superSizeMe()
+    {
+        capacity_list = newLength(capacity_list);
+        entries = Arrays.copyOf(entries, capacity_list);
     }
     /**
     *  appends <code>item</code> to this list
@@ -23,7 +57,8 @@ public class AList<T> implements IList<T>, Iterable<T>
     */
     public boolean add(int index, T item)
     {
-        return false;
+        entries[index] = item; 
+        return true;
     }
     /**
     *  This returns a -1 if <code>quarry</code> is not found or the index of
@@ -32,9 +67,16 @@ public class AList<T> implements IList<T>, Iterable<T>
     *  @return -1 if <code>quarry</code> is not found or the index where
     *  the first instance of <code>quarry</code> is located.
     */
-    public int indexOf(T quarry)
+    public int indexOf(T quarry) //Done:not_tested
     {
-        return 0;
+        for (int index = 0; index < entries.length; index++)
+        {
+            if(entries[index] == quarry)
+            {
+                return index; 
+            }
+        }
+        return -1;
     }
     /**
     *  This removes the first instance of <code>quarry</code> from this
@@ -46,6 +88,14 @@ public class AList<T> implements IList<T>, Iterable<T>
     */
     public boolean remove(T quarry)
     {
+        for (int i = 0; i < capacity_list; i++)
+        {
+            if(entries[i] == quarry)
+            {
+                entries[i] = null; 
+                return true;
+            }
+        }
         return false;
     }
     /**
@@ -58,7 +108,8 @@ public class AList<T> implements IList<T>, Iterable<T>
     */
     public T remove(int index)
     {
-        return null;
+        entries[index] = null;
+        return (T) entries[index];
     }
     /**
     *  This removes all objects equal to <code>quarry</code> from this list.
@@ -67,21 +118,39 @@ public class AList<T> implements IList<T>, Iterable<T>
     */
     public boolean extirpate(T quarry)
     {
-        return false;
+        int j = 0;
+        for(int i = 0; i < capacity_list; i++)
+        {
+            if(entries[i] == quarry)
+            {
+                entries[i] = null;
+                j++;
+            }
+        }
+        if(j == 0)
+        {
+            return false;
+        }
+        return true;
+        
     }
     /**
     *  This removes all elements from this list.
     */
     public void clear()
     {
+        for(int index = 0; index < capacity_list; index++)
+        {
+            entries[index] = null;
+        }
     }
     /**
     *  This computes the size of the list
     *  @return the number of elements in this list
     */
-    public int size()
+    public int size() //Done:Not_tested
     {
-        return 0;
+        return size;
     }
     /**
     *   This replaces the object at index <code>index</code> with <code>newItem</code>.
@@ -92,7 +161,7 @@ public class AList<T> implements IList<T>, Iterable<T>
     */
     public void set(int index, T newItem)
     {
- 
+        entries[index] = newItem;
     }
     /**
     *   This fetches the object at index <code>index</code>.
@@ -100,9 +169,9 @@ public class AList<T> implements IList<T>, Iterable<T>
     *   @return the element at <code>index</code> in this list.
     *   @throws IndexOutOfBOundException if the <code>index</code> is out of bounds.
     */
-    public T get(int index)
+    public T get(int index) //Done:not_tested
     {
-        return null;
+        return (T) entries[index];
     }
     /**
     *   This checks for the presence of <code>quarry</code> in this list.
@@ -111,6 +180,14 @@ public class AList<T> implements IList<T>, Iterable<T>
     */
     public boolean contains(T quarry)
     {
+        
+        for (int index = 0; index < entries.length; index++)
+        {
+            if(entries[index] == quarry)
+            {
+                return true; 
+            }
+        }
         return false;
     }
     /**
@@ -120,5 +197,30 @@ public class AList<T> implements IList<T>, Iterable<T>
     public Iterator<T> iterator()
     {
         return null;
+    }
+    public String toString()
+    {
+        StringBuffer sb = new StringBuffer();
+        if (size == 0)
+        {
+            return "[]";
+        }
+        sb.append("[");
+        for(int k = 0; k < size - 1; k++)
+        {
+            if (entries[k] != null)
+            {
+              sb.append(String.format("%s, ", entries[k]));  
+            }
+        }
+        sb.append(String.format("%s]", entries[size - 1]));
+        return sb.toString();
+    }
+    public static void main(String[] args)
+    {
+        AList<String> uhm = new AList<>(1);
+        System.out.println(uhm.add("yuh"));
+        System.out.println(uhm);
+
     }
 }
