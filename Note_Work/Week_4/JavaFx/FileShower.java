@@ -1,18 +1,19 @@
-    
+/**************************************************
+*   Author: Morrison
+*   Date:  23 Feb 2022
+**************************************************/
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import java.util.Optional;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextArea;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.io.IOException;
@@ -21,14 +22,13 @@ import java.io.File;
 public class FileShower extends Application
 {
     private Optional<Path> filePath;
-    private TextArea ta; 
-    private Stage primary; 
+    private TextArea ta;
+    private Stage primary;
     public FileShower()
     {
         filePath = Optional.of(Path.of("sampler.txt"));
-        ta = new TextArea(); 
-        ta.setStyle("   -fx-font-size :24pt");
-
+        ta = new TextArea();
+        ta.setStyle("-fx-font-family:courier;-fx-font-size: 2em;-fx-tab-size:4;");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class FileShower extends Application
     @Override
     public void start(Stage primary)
     {
-        this.primary = primary; 
+        this.primary = primary;
         BorderPane bp = new BorderPane();
         Scene s = new Scene(bp, 800, 500);
         primary.setScene(s);
@@ -53,19 +53,17 @@ public class FileShower extends Application
         Menu fileMenu = new Menu("File");
         mbar.getMenus().add(fileMenu);
         MenuItem openItem = new MenuItem("Open...");
-        openItem.setOnAction(e->
+        openItem.setOnAction( e ->
         {
-            FileChooser fc = new FileChooser(); 
+            FileChooser fc = new FileChooser();
             fc.setTitle("Open File");
             File chosen = fc.showOpenDialog(primary);
-            primary.setTitle((String) chosen.getAbsolutePath());
-            filePath = Optional.of(Path.of(chosen.getAbsolutePath())); 
-
-            //get contents of file 
-            String innards = aspirateFileInPath(); 
-            // put contents into the textarea 
+            primary.setTitle(chosen.getAbsolutePath());
+            filePath = Optional.of(Path.of(chosen.getAbsolutePath()));
+            //get contents of file
+            String innards = aspirateFileInPath();
+            //put contents into the textarea.
             ta.setText(innards);
-
         });
         MenuItem quitItem = new MenuItem("Quit");
         quitItem.setOnAction( e ->

@@ -17,7 +17,9 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.io.IOException;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 public class SimpleEdit extends Application
 {
     private Optional<Path> filePath;
@@ -26,9 +28,8 @@ public class SimpleEdit extends Application
     public SimpleEdit()
     {
         filePath = Optional.of(Path.of("sampler.txt"));
-        ta = new TextArea(); 
-        ta.setStyle("   -fx-font-size :24pt");
-
+        ta = new TextArea();
+        ta.setStyle("-fx-font-family:courier;-fx-font-size: 2em;-fx-tab-size:4;");
     }
 
     @Override
@@ -39,7 +40,7 @@ public class SimpleEdit extends Application
     @Override
     public void start(Stage primary)
     {
-        this.primary = primary; 
+        this.primary = primary;
         BorderPane bp = new BorderPane();
         Scene s = new Scene(bp, 800, 500);
         primary.setScene(s);
@@ -53,33 +54,51 @@ public class SimpleEdit extends Application
         Menu fileMenu = new Menu("File");
         mbar.getMenus().add(fileMenu);
         MenuItem openItem = new MenuItem("Open...");
-        MenuItem saveItem = new MenuItem("Save...");
-        MenuItem saveAsItem = new MenuItem("Save As...");
-        openItem.setOnAction(e->
+        openItem.setOnAction( e ->
         {
-            FileChooser fc = new FileChooser(); 
+            FileChooser fc = new FileChooser();
             fc.setTitle("Open File");
             File chosen = fc.showOpenDialog(primary);
-            primary.setTitle((String) chosen.getAbsolutePath());
-            filePath = Optional.of(Path.of(chosen.getAbsolutePath())); 
-
-            //get contents of file 
-            String innards = aspirateFileInPath(); 
-            // put contents into the textarea 
+            primary.setTitle(chosen.getAbsolutePath());
+            filePath = Optional.of(Path.of(chosen.getAbsolutePath()));
+            //get contents of file
+            String innards = aspirateFileInPath();
+            //put contents into the textarea.
             ta.setText(innards);
-
         });
+        MenuItem saveItem = new MenuItem("Save");
+        saveItem.setOnAction( e -> 
+        {
+            try
+            {
+                
+                BufferedWriter writer = Files.newBufferedWriter(filePath.get());
+                //writer.flush();
+                writer.write(ta.getText());
+                writer.close(); 
+            }
+            catch(NoSuchFileException ex)
+            {
+                System.err.printf("File %s does not exist\n", filePath.get());
+            }
+            catch(IOException ex)
+            { 
+                ex.printStackTrace();
+            }
+        });
+
+
         MenuItem quitItem = new MenuItem("Quit");
         quitItem.setOnAction( e ->
         {
             Platform.exit();
         });
-        fileMenu.getItems().addAll(openItem, quitItem, saveAsItem, saveItem);
+        fileMenu.getItems().addAll(openItem, saveItem,  quitItem);
         return mbar;
     }
     private String aspirateFileInPath()
     {
-        try(BufferedReader br = Files.newBufferedReader(filePath.get());)
+        try(BufferedReader br = Files.newBufferedReader(filePath.get()))
         {
             StringBuffer sb = new StringBuffer();
             br.lines().forEach( line -> sb.append(line + "\n"));
@@ -90,7 +109,7 @@ public class SimpleEdit extends Application
             System.err.printf("File %s does not exist\n", filePath.get());
         }
         catch(IOException ex)
-        {
+        { 
             ex.printStackTrace();
         }
         return "";

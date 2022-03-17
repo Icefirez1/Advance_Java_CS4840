@@ -1,3 +1,4 @@
+
 //package Note_Work.Week_2.IStack;
 
 public interface IStack<T>

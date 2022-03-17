@@ -2,10 +2,10 @@
 #iiii thiiiink this is right i havent tested it and im too tired to
 def zero(a, b, tol, f): 
     middle = (a + b)/2
-    while (f(middle) > 0+tol or f(middle) < 0-tol):
-        if (f(middle) > 0+tol):
+    while b-a > tol:
+        if (f(middle)*f(a) < 0):
             b = middle
-        elif (f(middle) < 0-tol):
+        else:
             a = middle
         middle = (a + b)/2
     return middle

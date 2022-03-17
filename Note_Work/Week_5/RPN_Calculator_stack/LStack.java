@@ -1,4 +1,5 @@
 
+
 // Making stacks with a linked list 
 // This is my first time working with stuff like this so thats interesting
 

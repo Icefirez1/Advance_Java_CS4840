@@ -22,7 +22,6 @@ public class BinarySearch<T extends Comparable<T>>
         //throw an IllegalArgumentException if 
         //the list is out of order.
         this.items = items;
-        //System.out.println(isInOrder(items));
         if (!isInOrder(items))
         {
             throw new IllegalArgumentException("List Out of order");
@@ -51,21 +50,25 @@ public class BinarySearch<T extends Comparable<T>>
     {
         //use bianry search to locate quarry by index
         //return -1 if it's a wild goose chase.
-        while (items.size() > 1)
+        int low = 0; 
+        int high = items.size();
+        int middle_index = (high+low)/2;
+        while (low + 1 < high)
         {
-            Integer middle_index = items.size()/2;
-            if (quarry.compareTo(items.get(middle_index)) == 0)
+            if (quarry.equals(items.get(middle_index)))
             {
                 return middle_index;
             }
-            else if (quarry.compareTo(items.get(middle_index)) == 1)
+            if (quarry.compareTo(items.get(middle_index)) > 0)
             {
-                items = items.subList(middle_index, items.size());
+                low = middle_index;
             }
-            else if (quarry.compareTo(items.get(middle_index)) == -1)
+            else
             {
-                items = items.subList(middle_index, items.size());
+                high = middle_index;
             }
+            middle_index = (high+low)/2;
+
         }
         return -1;
     }
@@ -73,24 +76,17 @@ public class BinarySearch<T extends Comparable<T>>
     {
         //TEST YOUR CODE!!
         //System.out.println("yuh");
-        List<Integer> list = new ArrayList<Integer>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        //list.add(2);
-        //list.add(123);
-        list.add(5);
-        list.add(6);
-        //System.out.println(list.toString());
-        BinarySearch<Integer> bs = new BinarySearch<>(list);
-        /*List<Integer> tmp = new ArrayList<>(list);
-        Collections.sort(tmp);
-        boolean sorted = tmp.equals(list);
-        if (sorted == false)
+        List<String> list = new ArrayList<String>();
+        int n = Integer.parseInt(args[0]);
+        for (int i = 0; i < n; i++)
         {
-            throw new IllegalArgumentException("dumb");
-        }*/
-        System.out.println(list.indexOf(5));
+            String add = Integer.toString(i);
+            list.add(add);
+            
+        }
+        //System.out.println(list);
+        BinarySearch<String> bs = new BinarySearch<>(list);
+        System.out.println(bs.indexOf("9"));
 
         
 
